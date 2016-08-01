@@ -26,6 +26,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var sh 	= 	require('sync-exec');
 var phpjs = require('phpjs');
 /*
@@ -35,12 +36,63 @@ var phpjs = require('phpjs');
 var info = {
 	'version':		VERSION,
 	'server_port':	SERVER_PORT,
-	'current_mode':	DEFAULT_MODE,
 	'cardWifiList': [],
 	'currentCardWifi': "",
 	'currentIP': '127.0.0.1',
 	'isAP': false,
-	'wifiList': []
+	'wifiList': [],
+	'technologies': [
+		{
+			Name: 'WPA2PSK/AES',
+			NetworkType: 'Infra',
+			AuthMode: 'WPA2PSK',
+			EncrypType: 'AES',
+			towTimesSSID: true,
+			keywords: ['WPA2', 'AES']
+		},
+		{
+			Name: 'WPA2PSK/TKIP',
+			NetworkType: 'Infra',
+			AuthMode: 'WPA2PSK',
+			EncrypType: 'TKIP',
+			towTimesSSID: true,
+			keywords: ['WPA2', 'TKIP']
+		},
+		{
+			Name: 'OPEN/NONE',
+			NetworkType: 'Infra',
+			AuthMode: 'OPEN',
+			EncrypType: 'NONE',
+			towTimesSSID: false,
+			keywords: ['NONE']
+		},
+		{
+			Name: 'SHARED/WEP',
+			NetworkType: 'Infra',
+			AuthMode: 'SHARED',
+			EncrypType: 'WEP',
+			DefaultKeyID: 1,
+			Key1: 'password here',
+			towTimesSSID: false,
+			keywords: ['WEP']
+		},
+		{
+			Name: 'WPAPSK/TKIP',
+			NetworkType: 'Infra',
+			AuthMode: 'WPAPSK',
+			EncrypType: 'TKIP',
+			towTimesSSID: true,
+			keywords: ['WPA1', 'TKIP']
+		},
+		{
+			Name: 'WPAPSK/AES',
+			NetworkType: 'Infra',
+			AuthMode: 'WPAPSK',
+			EncrypType: 'AES',
+			towTimesSSID: true,
+			keywords: ['WPA1', 'AES']
+		}
+	]
 } //current info
 
 
@@ -66,6 +118,47 @@ io.on('connection', function (socket) {
 	});
 	socket.on('survey', function() {
 		try_survey(socket);
+	});
+	
+	//try to connect to access point
+	socket.on('tryToConnect', function(accesspoint) {
+		console.log(accesspoint.security);
+		var security = info.technologies[accesspoint.security];
+		console.log(security);
+		if (!security) {
+			socket.emit('connection_rep', {status: false})
+			console.log("Don't know this security technology");
+			return;
+		}
+		console.log("Send information!")
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
+		if (security.DefaultKeyID)
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+		
+		if (security.Key1)
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set Key1=' + accesspoint.password);
+		
+		if (security.DefaultKeyID)
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+		
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID=' + security.ssid);
+		
+		if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK=' + accesspoint.password);
+		
+		if (security.towTimesSSID)
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID=' + security.ssid);
+		
+		console.log("Setuped! Try to real connect!")
+		
+		var tryToConnect = spawn('ifconfig', [info.currentCardWifi, 'up']);
+	
+		tryToConnect.stdout.on('data', function (data) {
+			console.log("Try to Connect");
+			console.log(data);
+		});
 	});
 	socket.on('updateCardWifi', function(cardName) {
 		if (info.cardWifiList.indexOf(cardName) != -1) {

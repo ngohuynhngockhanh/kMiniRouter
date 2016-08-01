@@ -39,26 +39,22 @@
 		<div class="row">
 		  <div class="col-md-12">
 			<h3 class="text-center"><span translate="Try to connect">Try to connect</span></h3>
-			<form class="form-horizontal">
+			<form class="form-horizontal" ng-submit="try_to_connect_with_full_info(accesspoint);">
 			  <div class="form-group">
-				<label for="inputSSID">SSID</label>
+				<label for="inputSSID" translate="SSID">SSID</label>
 				<input type="text" class="form-control" ng-model="accesspoint.ssid">
 			  </div>
 			  <div class="form-group">
-				<label for="inputPassword">Password</label>
+				<label for="inputPassword" translate="Password">Password</label>
 				<input type="password" class="form-control" id="inputPassword" ng-model="accesspoint.password">
 			  </div>
 			  <div class="form-group">
-				<label for="exampleInputFile">File input</label>
-				<input type="file" id="exampleInputFile">
-				<p class="help-block">Example block-level help text here.</p>
+				<label translate="Security">Security</label>
+				<select class="form-control" ng-model="accesspoint.security">
+					<option ng-repeat="security in info.technologies" value="{{$index}}">{{security.Name}}</option>
+				</select> 
 			  </div>
-			  <div class="checkbox">
-				<label>
-				  <input type="checkbox"> Check me out
-				</label>
-			  </div>
-			  <button type="submit" class="btn btn-default">Submit</button>
+			  <div class="text-center"><button type="submit" class="btn btn-default" translate="Submit">Submit</button></div>
 			</form>
 		  </div>
 		</div>

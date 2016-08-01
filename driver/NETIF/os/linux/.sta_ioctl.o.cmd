@@ -1,18 +1,18 @@
-cmd_/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o := gcc -Wp,-MD,/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/.sta_ioctl.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/4.9/include -I/usr/src/linux-headers-3.4.112-sun8i/arch/arm/include -Iarch/arm/include/generated -Iinclude  -include /usr/src/linux-headers-3.4.112-sun8i/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Iarch/arm/mach-sunxi/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -marm -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -funwind-tables -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -DAGGREGATION_SUPPORT -DPIGGYBACK_SUPPORT -DWMM_SUPPORT -DLINUX -Wall -Wstrict-prototypes -Wno-trigraphs -DSYSTEM_LOG_SUPPORT -DRT28xx_MODE=STA -DCHIPSET=7601U -DRESOURCE_PRE_ALLOC -I/root/TL-WN727N_V4_150909/Driver/NETIF/include -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT -DDBG -DADHOC_WPA2PSK_SUPPORT -DWPA_SUPPLICANT_SUPPORT -DWSC_STA_SUPPORT -DWSC_V2_SUPPORT -DWSC_LED_SUPPORT -DIWSC_SUPPORT -DRALINK_ATE -DCONFIG_RT2880_ATE_CMD_NEW -I/root/TL-WN727N_V4_150909/Driver/NETIF/ate/include -DRALINK_QA -DDOT11_N_SUPPORT -DSTATS_COUNT_SUPPORT -DIFUP_IN_PROBE -DOS_ABL_SUPPORT -DOS_ABL_FUNC_SUPPORT -DOS_ABL_OS_PCI_SUPPORT -DOS_ABL_OS_USB_SUPPORT -DOS_ABL_OS_AP_SUPPORT -DOS_ABL_OS_STA_SUPPORT -DEXPORT_SYMTAB -DLED_CONTROL_SUPPORT -DMT7601U -DMT7601 -DRLT_MAC -DRLT_RF -DRTMP_MAC_USB -DRTMP_USB_SUPPORT -DRTMP_TIMER_TASK_SUPPORT -DRX_DMA_SCATTER -DVCORECAL_SUPPORT -DRTMP_EFUSE_SUPPORT -DNEW_MBSSID_MODE -DRTMP_INTERNAL_TX_ALC -DCONFIG_ANDES_SUPPORT -DDPD_CALIBRATION_SUPPORT -DANT_DIVERSITY_SUPPORT -DCONFIG_RX_CSO_SUPPORT -DRTMP_FREQ_CALIBRATION_SUPPORT  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(sta_ioctl)"  -D"KBUILD_MODNAME=KBUILD_STR(mtnet7601Usta)" -c -o /root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/.tmp_sta_ioctl.o /root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.c
+cmd_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.o := gcc -Wp,-MD,/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/.sta_ioctl.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/4.9/include -I/usr/src/linux-headers-3.4.112-sun8i/arch/arm/include -Iarch/arm/include/generated -Iinclude  -include /usr/src/linux-headers-3.4.112-sun8i/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Iarch/arm/mach-sunxi/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -marm -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -funwind-tables -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -DAGGREGATION_SUPPORT -DPIGGYBACK_SUPPORT -DWMM_SUPPORT -DLINUX -Wall -Wstrict-prototypes -Wno-trigraphs -DSYSTEM_LOG_SUPPORT -DRT28xx_MODE=STA -DCHIPSET=7601U -DRESOURCE_PRE_ALLOC -I/home/ksp/kMiniRouter/driver/NETIF/include -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT -DDBG -DADHOC_WPA2PSK_SUPPORT -DWPA_SUPPLICANT_SUPPORT -DWSC_STA_SUPPORT -DWSC_V2_SUPPORT -DWSC_LED_SUPPORT -DIWSC_SUPPORT -DRALINK_ATE -DCONFIG_RT2880_ATE_CMD_NEW -I/home/ksp/kMiniRouter/driver/NETIF/ate/include -DRALINK_QA -DDOT11_N_SUPPORT -DSTATS_COUNT_SUPPORT -DIFUP_IN_PROBE -DOS_ABL_SUPPORT -DOS_ABL_FUNC_SUPPORT -DOS_ABL_OS_PCI_SUPPORT -DOS_ABL_OS_USB_SUPPORT -DOS_ABL_OS_AP_SUPPORT -DOS_ABL_OS_STA_SUPPORT -DEXPORT_SYMTAB -DLED_CONTROL_SUPPORT -DMT7601U -DMT7601 -DRLT_MAC -DRLT_RF -DRTMP_MAC_USB -DRTMP_USB_SUPPORT -DRTMP_TIMER_TASK_SUPPORT -DRX_DMA_SCATTER -DVCORECAL_SUPPORT -DRTMP_EFUSE_SUPPORT -DNEW_MBSSID_MODE -DRTMP_INTERNAL_TX_ALC -DCONFIG_ANDES_SUPPORT -DDPD_CALIBRATION_SUPPORT -DANT_DIVERSITY_SUPPORT -DCONFIG_RX_CSO_SUPPORT -DRTMP_FREQ_CALIBRATION_SUPPORT  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(sta_ioctl)"  -D"KBUILD_MODNAME=KBUILD_STR(mtnet7601Usta)" -c -o /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/.tmp_sta_ioctl.o /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.c
 
-source_/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o := /root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.c
+source_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.o := /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.c
 
-deps_/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o := \
+deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.o := \
     $(wildcard include/config/ap/support.h) \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/rtmp_comm.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/rtmp_comm.h \
     $(wildcard include/config/sta/support.h) \
     $(wildcard include/config/opmode/on/ap.h) \
     $(wildcard include/config/opmode/on/sta.h) \
     $(wildcard include/config/if/opmode/on/ap.h) \
     $(wildcard include/config/if/opmode/on/sta.h) \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/rtmp_type.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/rtmp_os.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/os/rt_linux.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/rtmp_type.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/rtmp_os.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/os/rt_linux.h \
     $(wildcard include/config/apsta/mixed/support.h) \
     $(wildcard include/config/multi/channel.h) \
     $(wildcard include/config/5vt/enhance.h) \
@@ -850,17 +850,17 @@ deps_/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o 
   /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/unistd.h \
     $(wildcard include/config/oabi/compat.h) \
   include/linux/kthread.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/os/rt_linux_cmm.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/os/rt_os.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/link_list.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/rtmp_cmd.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/os/rt_linux_cmm.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/os/rt_os.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/link_list.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/rtmp_cmd.h \
     $(wildcard include/config/value.h) \
     $(wildcard include/config/init.h) \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/iface/iface_util.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/rt_os_util.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/rt_os_net.h \
-  /root/TL-WN727N_V4_150909/Driver/NETIF/include/chip/chip_id.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/iface/iface_util.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/rt_os_util.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/rt_os_net.h \
+  /home/ksp/kMiniRouter/driver/NETIF/include/chip/chip_id.h \
 
-/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o: $(deps_/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o)
+/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.o: $(deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.o)
 
-$(deps_/root/TL-WN727N_V4_150909/Driver/NETIF/os/linux/../../os/linux/sta_ioctl.o):
+$(deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/sta_ioctl.o):

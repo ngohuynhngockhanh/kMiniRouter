@@ -36,7 +36,6 @@
 #include <linux/if_arp.h>
 #include <linux/ctype.h>
 #include <linux/vmalloc.h>
-#include <linux/uidgid.h>
 #ifdef RTMP_USB_SUPPORT
 #include <linux/usb.h>
 #endif /* RTMP_USB_SUPPORT */

@@ -60,6 +60,8 @@
         // create a message to display in our view
         $scope.message = 'Everyone come and see how good I look!';
 		
+		$scope.accesspoint = {security: 0};
+		
 		mySocket.on('info', function (info) {
 			$rootScope.info = info;
 			$rootScope.surveyTable = info.wifiList;
@@ -80,6 +82,32 @@
 		$scope.updateCardWifi = function(cardName) {
 			console.log("Card name");
 			mySocket.emit("updateCardWifi", cardName);
+		}
+		
+		$scope.tryToConnectToSSID = function(ssidInfo) {
+			var ssidInfoSecurityToSelect = function(security) {
+				var info = $rootScope.info;
+				for (var i = 0; i < info.technologies.length; i++) {
+					var technology = info.technologies[i];
+					var isOk = true;
+					for (var j = 0; j < technology.keywords.length; j++) {
+						var keyword = technology.keywords[j];
+						if (security.indexOf(keyword) == -1) {
+							isOk = false;
+							break;
+						}
+					}
+					if (isOk)
+						return i;
+				}
+			}
+			$scope.accesspoint.ssid = ssidInfo.ssid;
+			$scope.accesspoint.security = ssidInfoSecurityToSelect(ssidInfo.security);
+		}
+		
+		$scope.try_to_connect_with_full_info = function(accesspoint) {
+			console.log("Try to connect!")
+			mySocket.emit("tryToConnect", accesspoint);
 		}
     });
 
