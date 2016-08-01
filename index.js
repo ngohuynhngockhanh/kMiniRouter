@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+
+
 /*
 * Constants
 */
@@ -17,7 +19,7 @@ const TIME_INTERVAL_1 = 3000; //refresh wlan config!
 const TIME_INTERVAL_2 = 3000; //refrest IP
 
 //timer timeout
-
+const TIME_TIMEOUT_1 = 90000;//connect to AP
 /*
 * Libraries
 */
@@ -29,6 +31,11 @@ var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var sh 	= 	require('sync-exec');
 var phpjs = require('phpjs');
+
+//run some startup scripts
+console.log(sh("cd " + __dirname + "/driver && bash ./load.sh").stdout);
+
+
 /*
 * Global variables
 */
@@ -40,6 +47,7 @@ var info = {
 	'currentCardWifi': "",
 	'currentIP': '127.0.0.1',
 	'isAP': false,
+	'connectionTimeout': TIME_TIMEOUT_1,
 	'wifiList': [],
 	'technologies': [
 		{
@@ -131,6 +139,7 @@ io.on('connection', function (socket) {
 			console.log("Don't know this security technology");
 			return;
 		}
+		
 		console.log("Send information!")
 		sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
 		sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
@@ -144,17 +153,21 @@ io.on('connection', function (socket) {
 		if (security.DefaultKeyID)
 			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
 		
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + security.ssid + '"');
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
 		
 		if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
 			sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
 		
 		if (security.towTimesSSID)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + security.ssid + '"');
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
+		
+		
 		
 		console.log("Setuped! Try to real connect!")
 		
-		var tryToConnect = sh('dhclient ' + info.currentCardWifi).stdout;
+		var tryToConnect = sh('dhclient ' + info.currentCardWifi, TIME_TIMEOUT_1).stdout;
+		
+		socket.emit("connected");
 		console.log(tryToConnect);
 	});
 	socket.on('updateCardWifi', function(cardName) {

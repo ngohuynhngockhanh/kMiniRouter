@@ -72,6 +72,10 @@
 			$rootScope.surveyTable = survey_result;
 		});
 		
+		mySocket.on('connected', function() {
+			alert("Connected to AP");
+		});
+		
 		
 		//events
 		$scope.survey = function() {
@@ -108,6 +112,9 @@
 		$scope.try_to_connect_with_full_info = function(accesspoint) {
 			console.log("Try to connect!")
 			mySocket.emit("tryToConnect", accesspoint);
+			setTimeout(function() {
+				alert("Can't connect! Sorry, please check your ssid and password");
+			}, info.connectionTimeout + 1000);
 		}
     });
 
