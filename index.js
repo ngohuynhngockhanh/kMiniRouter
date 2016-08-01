@@ -31,6 +31,7 @@ var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var sh 	= 	require('sync-exec');
 var phpjs = require('phpjs');
+var fs = require('fs');
 
 //run some startup scripts
 console.log(sh("cd " + __dirname + "/driver && bash ./load.sh").stdout);
@@ -132,6 +133,8 @@ io.on('connection', function (socket) {
 	socket.on('tryToConnect', function(accesspoint) {
 		console.log(accesspoint.security);
 		console.log(info.currentCardWifi);
+		
+		accesspoint.ssid = phpjs.trim(accesspoint.ssid);
 		var security = info.technologies[accesspoint.security];
 		console.log(security);
 		if (!security) {
@@ -161,11 +164,11 @@ io.on('connection', function (socket) {
 		if (security.towTimesSSID)
 			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
 		
-		
+		fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
 		
 		console.log("Setuped! Try to real connect!")
 		
-		var tryToConnect = sh('dhclient ' + info.currentCardWifi, TIME_TIMEOUT_1).stdout;
+		var tryToConnect = sh('iwconfig ' + info.currentCardWifi + ' && dhclient ' + info.currentCardWifi, TIME_TIMEOUT_1).stdout;
 		
 		socket.emit("connected");
 		console.log(tryToConnect);
