@@ -123,6 +123,7 @@ io.on('connection', function (socket) {
 	//try to connect to access point
 	socket.on('tryToConnect', function(accesspoint) {
 		console.log(accesspoint.security);
+		console.log(info.currentCardWifi);
 		var security = info.technologies[accesspoint.security];
 		console.log(security);
 		if (!security) {
@@ -138,27 +139,23 @@ io.on('connection', function (socket) {
 			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
 		
 		if (security.Key1)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set Key1=' + accesspoint.password);
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
 		
 		if (security.DefaultKeyID)
 			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
 		
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID=' + security.ssid);
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + security.ssid + '"');
 		
 		if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK=' + accesspoint.password);
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
 		
 		if (security.towTimesSSID)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID=' + security.ssid);
+			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + security.ssid + '"');
 		
 		console.log("Setuped! Try to real connect!")
 		
-		var tryToConnect = spawn('ifconfig', [info.currentCardWifi, 'up']);
-	
-		tryToConnect.stdout.on('data', function (data) {
-			console.log("Try to Connect");
-			console.log(data);
-		});
+		var tryToConnect = sh('dhclient ' + info.currentCardWifi).stdout;
+		console.log(tryToConnect);
 	});
 	socket.on('updateCardWifi', function(cardName) {
 		if (info.cardWifiList.indexOf(cardName) != -1) {
