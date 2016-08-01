@@ -1,0 +1,48 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html ng-app="kMiniRouter">
+<head>
+  <!-- SCROLLS -->
+  <!-- load bootstrap and fontawesome via CDN -->
+  <link rel="stylesheet" href="templates/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="templates/css/font-awesome.css" />
+
+  <!-- SPELLS -->
+  <!-- load angular and angular route via CDN -->
+  <script src="templates/js/angularjs.min.js"></script>
+  <script src="templates/js/angularjs-route.min.js"></script>
+  <script src="templates/js/socket.min.js"></script>
+  <script src="templates/js/angular-translate.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="templates/js/script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body ng-controller="mainController">
+
+	<!-- HEADER AND NAVBAR -->
+	<header>
+		<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">kMiniRouter {{info.version}}</a>
+			</div>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" translate="Dashboard"><i class="fa fa-home"></i>Dashboard</a></li>
+				<li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
+				<li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+			</ul>
+		</div>
+		</nav>
+	</header>
+
+	<!-- MAIN CONTENT AND INJECTED VIEWS -->
+	<div id="main">
+
+		<!-- angular templating -->
+		<!-- this is where content will be injected -->
+		<div ng-view></div>
+	</div>
+
+</body>
+</html>

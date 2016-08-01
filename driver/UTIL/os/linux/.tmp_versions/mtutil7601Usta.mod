@@ -1,0 +1,2 @@
+/root/TL-WN727N_V4_150909/Driver/UTIL/os/linux/mtutil7601Usta.ko
+/root/TL-WN727N_V4_150909/Driver/UTIL/os/linux/../../common/rt_os_util.o /root/TL-WN727N_V4_150909/Driver/UTIL/os/linux/../../os/linux/rt_linux_symb.o /root/TL-WN727N_V4_150909/Driver/UTIL/os/linux/../../os/linux/rt_rbus_pci_util.o /root/TL-WN727N_V4_150909/Driver/UTIL/os/linux/../../os/linux/rt_usb_util.o /root/TL-WN727N_V4_150909/Driver/UTIL/os/linux/../../os/linux/rt_linux.o

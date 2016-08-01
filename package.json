@@ -1,0 +1,27 @@
+{
+  "name": "kminirouter",
+  "version": "1.0.0",
+  "description": "a mini router for tplink wn727n",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngohuynhngockhanh/kMiniRouter.git"
+  },
+  "keywords": [
+    "router",
+    "mini",
+    "router"
+  ],
+  "author": "Ngo Huynh Ngoc Khanh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngohuynhngockhanh/kMiniRouter/issues"
+  },
+  "homepage": "https://github.com/ngohuynhngockhanh/kMiniRouter#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

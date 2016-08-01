@@ -1,0 +1,65 @@
+<!-- home.html -->
+    <div class="jumbotron">
+        <h2 class="text-center"><span translate="Wifi list">Wifi list</span> <button ng-click="survey()" class="btn btn-default" type="button" translate="Survey">Survey</button></h2>
+		<h4 class="text-center">
+			<span translate="IP Adress">IP Adress: </span>
+			{{info.currentIP}}
+		</h4>
+		<form class="text-center">
+			<div class="form-group">
+				<label><span translate="Wlan card">Wlan card</span></label>
+				<select ng-change="updateCardWifi(info.currentCardWifi)" class="form-control" ng-model="info.currentCardWifi" ng-options="option for option in info.cardWifiList track by option"></select>
+			</div>
+		</form>
+		
+
+        <table class="table table-hover table-responsive">
+			<thead>
+				<tr>
+					<th translate="Channel">Channel</th>
+					<th translate="SSID">SSID</th>
+					<th translate="BSSID">BSSID</th>
+					<th translate="Signal percent">Signal(%)</th>
+					<th translate="Action">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in surveyTable | orderBy: signal">
+					<td>{{row.channel}}</td>
+					<td>{{row.ssid}}</td>
+					<td>{{row.bssid}}</td>
+					<td>{{row.signal}}</td>
+					<td><a href="javascript:;" ng-click="tryToConnectToSSID(row)"><span translate="Connect">Connect</span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		
+    </div>
+	<div class="container">
+		<div class="row">
+		  <div class="col-md-12">
+			<h3 class="text-center"><span translate="Try to connect">Try to connect</span></h3>
+			<form class="form-horizontal">
+			  <div class="form-group">
+				<label for="inputSSID">SSID</label>
+				<input type="text" class="form-control" ng-model="accesspoint.ssid">
+			  </div>
+			  <div class="form-group">
+				<label for="inputPassword">Password</label>
+				<input type="password" class="form-control" id="inputPassword" ng-model="accesspoint.password">
+			  </div>
+			  <div class="form-group">
+				<label for="exampleInputFile">File input</label>
+				<input type="file" id="exampleInputFile">
+				<p class="help-block">Example block-level help text here.</p>
+			  </div>
+			  <div class="checkbox">
+				<label>
+				  <input type="checkbox"> Check me out
+				</label>
+			  </div>
+			  <button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		  </div>
+		</div>
+	</div>
