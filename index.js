@@ -12,6 +12,7 @@ const VERSION = '1.0.0';
 //config constants
 const SERVER_PORT = 80;
 const TEMPLATE_DIR = __dirname + '/templates';
+const SAVED_FILE = __dirname + '/savedInfo';
 
 
 //timer interval
@@ -131,47 +132,7 @@ io.on('connection', function (socket) {
 	
 	//try to connect to access point
 	socket.on('tryToConnect', function(accesspoint) {
-		console.log(accesspoint.security);
-		console.log(info.currentCardWifi);
-		
-		accesspoint.ssid = phpjs.trim(accesspoint.ssid);
-		var security = info.technologies[accesspoint.security];
-		console.log(security);
-		if (!security) {
-			socket.emit('connection_rep', {status: false})
-			console.log("Don't know this security technology");
-			return;
-		}
-		
-		console.log("Send information!")
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
-		if (security.DefaultKeyID)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
-		
-		if (security.Key1)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
-		
-		if (security.DefaultKeyID)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
-		
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
-		
-		if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
-		
-		if (security.towTimesSSID)
-			sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
-		
-		fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
-		
-		console.log("Setuped! Try to real connect!")
-		
-		var tryToConnect = sh('iwconfig ' + info.currentCardWifi + ' && dhclient ' + info.currentCardWifi, TIME_TIMEOUT_1).stdout;
-		
-		socket.emit("connected");
-		console.log(tryToConnect);
+		tryToConnect(accesspoint, socket);
 	});
 	socket.on('updateCardWifi', function(cardName) {
 		if (info.cardWifiList.indexOf(cardName) != -1) {
@@ -186,6 +147,58 @@ io.on('connection', function (socket) {
 		console.log(data);
 	});
 });
+
+var tryToConnect = function (accesspoint, socket) {
+	console.log(accesspoint.security);
+	console.log(info.currentCardWifi);
+	
+	accesspoint.ssid = phpjs.trim(accesspoint.ssid);
+	var security = info.technologies[accesspoint.security];
+	console.log(security);
+	if (!security) {
+		if (socket) socket.emit('connection_rep', {status: false})
+		console.log("Don't know this security technology");
+		return;
+	}
+	
+	console.log("Send information!")
+	sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
+	sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
+	sh('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
+	if (security.DefaultKeyID)
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+	
+	if (security.Key1)
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
+	
+	if (security.DefaultKeyID)
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+	
+	sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
+	
+	if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
+	
+	if (security.towTimesSSID)
+		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
+	
+	fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
+	
+	console.log("Setuped! Try to real connect!")
+	
+	var tryHard = sh('iwconfig ' + info.currentCardWifi + ' && dhclient ' + info.currentCardWifi, TIME_TIMEOUT_1).stdout;
+	if (getIPCurrentCardWifi().length > 2) {
+		if (socket) socket.emit("connected");
+		saveAccesPoint(accesspoint);
+	} else 
+		if (socket)  socket.emit("cant_connect");
+	console.log(tryHard);
+}
+
+var saveAccesPoint = function(accesspoint) {
+	fs.writeFileSync(SAVED_FILE, JSON.stringify(accesspoint));
+}
+
 
 
 //auto survey
@@ -262,11 +275,37 @@ setInterval(function() {
 }, TIME_INTERVAL_1);
 
 //refresh Ip
+function getIPCurrentCardWifi() {
+	var ip = sh("ifconfig | grep " + info.currentCardWifi + " -A1 |  awk '/inet addr/{print substr($2,6)}'").stdout;
+	return ip;
+}
 setInterval(function() {
-	var ip = sh("ifconfig | grep ra0 -A1 |  awk '/inet addr/{print substr($2,6)}'").stdout;
+	var ip = getIPCurrentCardWifi();
 	if (ip != info.currentIP) {
 		info.currentIP = ip;
 		io.sockets.emit('info', info);
 	}
 		
 }, TIME_INTERVAL_2);
+
+
+
+
+
+
+
+
+
+var loadAccessPoint = function() {
+	console.log("Load Old Access Point");
+	if (fs.existsSync(SAVED_FILE)) {
+		console.log("deceted file");
+		var accesspoint = JSON.parse(fs.readFileSync(SAVED_FILE));
+		console.log("read File");
+		console.log(JSON.stringify(accesspoint, null, 4));
+		if (accesspoint.ssid)
+			tryToConnect(accesspoint);
+	}
+}
+
+loadAccessPoint();

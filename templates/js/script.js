@@ -76,6 +76,10 @@
 			alert("Connected to AP");
 		});
 		
+		mySocket.on('cant_connect', function() {
+			alert("We can't Connect to AP");
+		});
+		
 		
 		//events
 		$scope.survey = function() {
