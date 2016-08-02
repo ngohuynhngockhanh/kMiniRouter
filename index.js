@@ -17,7 +17,8 @@ const SAVED_FILE = __dirname + '/savedInfo';
 
 //timer interval
 const TIME_INTERVAL_1 = 3000; //refresh wlan config!
-const TIME_INTERVAL_2 = 3000; //refrest IP
+const TIME_INTERVAL_2 = 3000; //refresh IP
+const TIME_INTERVAL_3 = 7000; // check card wifi alive
 
 //timer timeout
 const TIME_TIMEOUT_1 = 90000;//connect to AP
@@ -35,7 +36,10 @@ var phpjs = require('phpjs');
 var fs = require('fs');
 
 //run some startup scripts
-console.log(sh("cd " + __dirname + "/driver && bash ./load.sh").stdout);
+function loadUSBWifi() {
+	console.log(sh("cd " + __dirname + "/driver && bash ./load.sh").stdout);
+} 
+loadUSBWifi();
 
 
 /*
@@ -287,6 +291,25 @@ setInterval(function() {
 	}
 		
 }, TIME_INTERVAL_2);
+var flag3_firstTime = true;
+setInterval(function() {
+	
+	var card = sh("iwconfig " + info.currentCardWifi).stdout;
+	console.log("check status card name ");
+	console.log(info.currentCardWifi);
+	if (phpjs.strstr(card, "Signal level")) {
+		console.log("Such a device");
+		if (getIPCurrentCardWifi().length <= 2) {
+			if (flag3_firstTime) {
+				loadUSBWifi();
+				loadAccessPoint();
+				if (getIPCurrentCardWifi().length > 2)
+					flag3_firstTime = false;
+			}
+		}
+	} else flag3_firstTime = true;
+
+}, TIME_INTERVAL_3);
 
 
 
