@@ -18,10 +18,11 @@ const SAVED_FILE = __dirname + '/savedInfo';
 //timer interval
 const TIME_INTERVAL_1 = 3000; //refresh wlan config!
 const TIME_INTERVAL_2 = 3000; //refresh IP
-const TIME_INTERVAL_3 = 7000; // check card wifi alive
+const TIME_INTERVAL_3 = 10000; // check card wifi alive
+const MAX_RECONNECT = 3;
 
 //timer timeout
-const TIME_TIMEOUT_1 = 90000;//connect to AP
+const TIME_TIMEOUT_1 = 120000;//connect to AP
 /*
 * Libraries
 */
@@ -153,7 +154,7 @@ io.on('connection', function (socket) {
 });
 
 var tryToConnect = function (accesspoint, socket) {
-	console.log(accesspoint.security);
+	console.log('security id' + accesspoint.security);
 	console.log(info.currentCardWifi);
 	
 	accesspoint.ssid = phpjs.trim(accesspoint.ssid);
@@ -187,16 +188,26 @@ var tryToConnect = function (accesspoint, socket) {
 		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
 	
 	fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
-	
+	console.log(accesspoint);
 	console.log("Setuped! Try to real connect!")
+	console.log(sh('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi).stdout);
+	var tryHard = exec('ifup ' + info.currentCardWifi, []);
+	var timeoutConnect = setTimeout(function() {
+		if (socket)
+			socket.emit("cant_connect");
+	}, TIME_TIMEOUT_1);
+	tryHard.stderr.on('data', function (data) {
+		console.log("try hard");
+		if (data.indexOf('bound to ') > -1) {
+			if (socket) 
+				socket.emit("connected");
+			saveAccesPoint(accesspoint);
+			clearTimeout(timeoutConnect);
+		} 
+		console.log(data);
+	});
 	
-	var tryHard = sh('iwconfig ' + info.currentCardWifi + ' && dhclient ' + info.currentCardWifi, TIME_TIMEOUT_1).stdout;
-	if (getIPCurrentCardWifi().length > 2) {
-		if (socket) socket.emit("connected");
-		saveAccesPoint(accesspoint);
-	} else 
-		if (socket)  socket.emit("cant_connect");
-	console.log(tryHard);
+	
 }
 
 var saveAccesPoint = function(accesspoint) {
@@ -292,6 +303,7 @@ setInterval(function() {
 		
 }, TIME_INTERVAL_2);
 var flag3_firstTime = true;
+var check_interval_count = MAX_RECONNECT;
 setInterval(function() {
 	
 	var card = sh("iwconfig " + info.currentCardWifi).stdout;
@@ -302,12 +314,20 @@ setInterval(function() {
 		if (getIPCurrentCardWifi().length <= 2) {
 			if (flag3_firstTime) {
 				loadUSBWifi();
-				loadAccessPoint();
+				if (check_interval_count > 0) {
+					console.log("Reconnect #" + check_interval_count);
+					check_interval_count--;
+					loadAccessPoint();
+				}
+					
 				if (getIPCurrentCardWifi().length > 2)
 					flag3_firstTime = false;
 			}
 		}
-	} else flag3_firstTime = true;
+	} else {
+		flag3_firstTime = true;
+		check_interval_count = MAX_RECONNECT;
+	}
 
 }, TIME_INTERVAL_3);
 
