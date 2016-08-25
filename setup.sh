@@ -1,4 +1,4 @@
-echo "Installing kLaserCutter..."
+echo "Installing kMiniRouter..."
 path=$(pwd)
 auto_script_filename=auto_start_when_boot_kMiniRouter
 auto_script_location=/etc/init.d/$auto_script_filename
