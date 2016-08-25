@@ -167,6 +167,7 @@ var tryToConnect = function (accesspoint, socket) {
 	}
 	
 	console.log("Send information!")
+	
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
@@ -191,14 +192,16 @@ var tryToConnect = function (accesspoint, socket) {
 	console.log(accesspoint);
 	console.log("Setuped! Try to real connect!")
 	console.log(sh('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi).stdout);
-	var tryHard = exec('ifup ' + info.currentCardWifi, []);
+	var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo 123', []);
 	var timeoutConnect = setTimeout(function() {
 		if (socket)
 			socket.emit("cant_connect");
 	}, TIME_TIMEOUT_1);
-	tryHard.stderr.on('data', function (data) {
+	tryHard.stdout.on('data', function (data) {
 		console.log("try hard");
-		if (data.indexOf('bound to ') > -1) {
+		var ip = getIPCurrentCardWifi();
+		
+		if (ip && ip.length > 2) {
 			if (socket) 
 				socket.emit("connected");
 			saveAccesPoint(accesspoint);
