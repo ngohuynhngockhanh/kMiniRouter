@@ -18,11 +18,11 @@ const SAVED_FILE = __dirname + '/savedInfo';
 //timer interval
 const TIME_INTERVAL_1 = 3000; //refresh wlan config!
 const TIME_INTERVAL_2 = 3000; //refresh IP
-const TIME_INTERVAL_3 = 10000; // check card wifi alive
-const MAX_RECONNECT = 3;
+const TIME_INTERVAL_3 = 70000; // check card wifi alive
+const MAX_RECONNECT = 1;
 
 //timer timeout
-const TIME_TIMEOUT_1 = 120000;//connect to AP
+const TIME_TIMEOUT_1 = 60000;//connect to AP
 /*
 * Libraries
 */
@@ -123,6 +123,7 @@ app.get('/', function (req, res) {
 	res.sendFile(TEMPLATE_DIR + '/index.html');
 });
 
+var __isTrying = false; // is trying to connect
 
 //new socket connection
 io.on('connection', function (socket) {
@@ -137,6 +138,7 @@ io.on('connection', function (socket) {
 	
 	//try to connect to access point
 	socket.on('tryToConnect', function(accesspoint) {
+		__isTrying = false;
 		tryToConnect(accesspoint, socket);
 	});
 	socket.on('updateCardWifi', function(cardName) {
@@ -153,7 +155,14 @@ io.on('connection', function (socket) {
 	});
 });
 
+
+
 var tryToConnect = function (accesspoint, socket) {
+	if (__isTrying) {
+		console.log("I'm busy, sorry");
+		return;
+	}
+	__isTrying = true;
 	console.log('security id' + accesspoint.security);
 	console.log(info.currentCardWifi);
 	
@@ -167,7 +176,6 @@ var tryToConnect = function (accesspoint, socket) {
 	}
 	
 	console.log("Send information!")
-	
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
@@ -196,16 +204,18 @@ var tryToConnect = function (accesspoint, socket) {
 	var timeoutConnect = setTimeout(function() {
 		if (socket)
 			socket.emit("cant_connect");
+		__isTrying = false;
 	}, TIME_TIMEOUT_1);
 	tryHard.stdout.on('data', function (data) {
 		console.log("try hard");
 		var ip = getIPCurrentCardWifi();
-		
+		console.log(ip);
 		if (ip && ip.length > 2) {
 			if (socket) 
 				socket.emit("connected");
 			saveAccesPoint(accesspoint);
 			clearTimeout(timeoutConnect);
+			__isTrying = false;
 		} 
 		console.log(data);
 	});
