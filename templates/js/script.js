@@ -146,13 +146,6 @@
 			}, info.connectionTimeout + 1000);
 		}
 		
-		$scope.showPassword = function(password) {
-			var l = password.length;
-			password = substr(password, 0, 4);
-			for (var i = 4; i < l; i++)
-				password += '*';
-			return password;
-		}
     });
 
     kMiniRouter.controller('aboutController', function($scope) {
