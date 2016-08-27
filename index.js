@@ -18,7 +18,8 @@ const SAVED_FILE = __dirname + '/savedInfo';
 //timer interval
 const TIME_INTERVAL_1 = 3000; //refresh wlan config!
 const TIME_INTERVAL_2 = 3000; //refresh IP
-const TIME_INTERVAL_3 = 70000; // check card wifi alive
+const TIME_INTERVAL_3 = 60000; //netstat -ntu
+const TIME_INTERVAL_4 = 70000; // check card wifi alive
 const MAX_RECONNECT = 1;
 
 //timer timeout
@@ -35,6 +36,8 @@ var spawn = require('child_process').spawn;
 var sh 	= 	require('sync-exec');
 var phpjs = require('phpjs');
 var fs = require('fs');
+
+exec("ifplugd", []);// run if it doesn't run
 
 //run some startup scripts
 function loadUSBWifi() {
@@ -123,7 +126,6 @@ app.get('/', function (req, res) {
 	res.sendFile(TEMPLATE_DIR + '/index.html');
 });
 
-var __isTrying = false; // is trying to connect
 
 //new socket connection
 io.on('connection', function (socket) {
@@ -138,7 +140,6 @@ io.on('connection', function (socket) {
 	
 	//try to connect to access point
 	socket.on('tryToConnect', function(accesspoint) {
-		__isTrying = false;
 		tryToConnect(accesspoint, socket);
 	});
 	socket.on('updateCardWifi', function(cardName) {
@@ -158,11 +159,6 @@ io.on('connection', function (socket) {
 
 
 var tryToConnect = function (accesspoint, socket) {
-	if (__isTrying) {
-		console.log("I'm busy, sorry");
-		return;
-	}
-	__isTrying = true;
 	console.log('security id' + accesspoint.security);
 	console.log(info.currentCardWifi);
 	
@@ -204,7 +200,7 @@ var tryToConnect = function (accesspoint, socket) {
 	var timeoutConnect = setTimeout(function() {
 		if (socket)
 			socket.emit("cant_connect");
-		__isTrying = false;
+		
 	}, TIME_TIMEOUT_1);
 	tryHard.stdout.on('data', function (data) {
 		console.log("try hard");
@@ -215,7 +211,7 @@ var tryToConnect = function (accesspoint, socket) {
 				socket.emit("connected");
 			saveAccesPoint(accesspoint);
 			clearTimeout(timeoutConnect);
-			__isTrying = false;
+			
 		} 
 		console.log(data);
 	});
@@ -342,7 +338,7 @@ setInterval(function() {
 		check_interval_count = MAX_RECONNECT;
 	}
 
-}, TIME_INTERVAL_3);
+}, TIME_INTERVAL_4);
 
 
 
@@ -365,3 +361,13 @@ var loadAccessPoint = function() {
 }
 
 loadAccessPoint();
+
+setInterval(function() {
+	exec("netstat -ntu", []);
+	
+	var defaultGateWay = sh('route | grep default | grep 0.0.0.0').stdout;
+	console.log(defaultGateWay);
+	if (defaultGateWay.length < 10) {
+		exec("dhclient " + info.currentCardWifi, [])
+	}
+}, TIME_INTERVAL_3);
