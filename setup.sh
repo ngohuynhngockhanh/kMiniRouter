@@ -19,8 +19,11 @@ update-rc.d $auto_script_filename defaults
 
 #install dnsmasq
 echo "Install DHCP Server"
-apt-get install dnsmasq -y 
+apt-get install dnsmasq ifplugd -y 
 
 echo "address=/wifi.arduino.vn/192.168.42.1" >> /etc/dnsmasq.conf
 echo "interface=eth0"  >> /etc/dnsmasq.conf
 echo "dhcp-range=192.168.42.123,192.168.42.244,12h"  >> /etc/dnsmasq.conf
+
+#install ralink driver
+cd driver && make && ./load.sh

@@ -1,7 +1,7 @@
 {
   "name": "kminirouter",
   "version": "1.0.0",
-  "description": "a mini router for tplink wn727n",
+  "description": "a mini router using ralink chip",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
