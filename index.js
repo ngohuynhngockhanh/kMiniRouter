@@ -19,7 +19,7 @@ const SAVED_FILE = __dirname + '/savedInfo';
 const TIME_INTERVAL_1 = 3000; //refresh wlan config!
 const TIME_INTERVAL_2 = 3000; //refresh IP
 const TIME_INTERVAL_3 = 60000; //netstat -ntu
-const TIME_INTERVAL_4 = 90000; // check card wifi alive
+const TIME_INTERVAL_4 = 1000; // check card wifi alive
 const MAX_RECONNECT = 1;
 
 //timer timeout
@@ -39,11 +39,6 @@ var fs = require('fs');
 
 exec("ifplugd", []);// run if it doesn't run
 
-//run some startup scripts
-function loadUSBWifi() {
-	console.log(sh("cd " + __dirname + "/driver && bash ./load.sh").stdout);
-} 
-loadUSBWifi();
 
 
 /*
@@ -59,6 +54,7 @@ var info = {
 	'isAP': false,
 	'connectionTimeout': TIME_TIMEOUT_1,
 	'wifiList': [],
+	'currentAccessPointInfo': {},
 	'technologies': [
 		{
 			Name: 'WPA2PSK/AES',
@@ -157,9 +153,15 @@ io.on('connection', function (socket) {
 });
 
 
+var sh_and_print = function(cmd) {
+	console.log(cmd);
+	return sh(cmd);
+}
+
 
 var tryToConnect = function (accesspoint, socket) {
-	console.log('security id' + accesspoint.security);
+	
+	loadUSBWifi(); //first
 	console.log(info.currentCardWifi);
 	
 	accesspoint.ssid = phpjs.trim(accesspoint.ssid);
@@ -172,31 +174,31 @@ var tryToConnect = function (accesspoint, socket) {
 	}
 	
 	console.log("Send information!")
-	sh('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
-	sh('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
-	sh('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
+	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
+	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
+	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
 	if (security.DefaultKeyID)
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
 	
 	if (security.Key1)
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
 	
 	if (security.DefaultKeyID)
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
 	
-	sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
+	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
 	
 	if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
 	
 	if (security.towTimesSSID)
-		sh('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
 	
 	fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
 	console.log(accesspoint);
 	console.log("Setuped! Try to real connect!")
-	console.log(sh('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi).stdout);
-	var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo "Finish dhclient0"', []);
+	console.log(sh_and_print('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi + ' && killall dhclient').stdout);
+	var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo "Finish dhclient"', []);
 	var timeoutConnect = setTimeout(function() {
 		if (socket)
 			socket.emit("cant_connect");
@@ -220,6 +222,7 @@ var tryToConnect = function (accesspoint, socket) {
 }
 
 var saveAccesPoint = function(accesspoint) {
+	info.currentAccessPointInfo = accesspoint;
 	fs.writeFileSync(SAVED_FILE, JSON.stringify(accesspoint));
 }
 
@@ -311,40 +314,12 @@ setInterval(function() {
 	}
 		
 }, TIME_INTERVAL_2);
-var flag3_firstTime = true;
-var check_interval_count = MAX_RECONNECT;
-setInterval(function() {
-	
-	var card = sh("iwconfig " + info.currentCardWifi).stdout;
-	console.log("check status card name ");
-	console.log(info.currentCardWifi);
-	if (phpjs.strstr(card, "Signal level")) {
-		console.log("Such a device");
-		if (getIPCurrentCardWifi().length <= 2) {
-			if (flag3_firstTime) {
-				loadUSBWifi();
-				if (check_interval_count > 0) {
-					console.log("Reconnect #" + check_interval_count);
-					check_interval_count--;
-					loadAccessPoint();
-				}
-					
-				if (getIPCurrentCardWifi().length > 2)
-					flag3_firstTime = false;
-			}
-		}
-	} else {
-		flag3_firstTime = true;
-		check_interval_count = MAX_RECONNECT;
-	}
-
-}, TIME_INTERVAL_4);
 
 
-
-
-
-
+//run some startup scripts
+function loadUSBWifi() {
+	console.log(sh_and_print("cd " + __dirname + "/driver && bash ./load.sh").stdout);
+} 
 
 
 
@@ -353,14 +328,43 @@ var loadAccessPoint = function() {
 	if (fs.existsSync(SAVED_FILE)) {
 		console.log("deceted file");
 		var accesspoint = JSON.parse(fs.readFileSync(SAVED_FILE));
+		info.currentAccessPointInfo = accesspoint;
 		console.log("read File");
 		console.log(JSON.stringify(accesspoint, null, 4));
 		if (accesspoint.ssid)
 			tryToConnect(accesspoint);
 	}
 }
+setTimeout(loadAccessPoint, 0);
 
-loadAccessPoint();
+
+var flag3_firstTime = true;
+var check_interval_count = MAX_RECONNECT;
+setInterval(function() {
+	
+	var card = sh("iwconfig " + info.currentCardWifi).stdout;
+	if (phpjs.strstr(card, "Signal level")) {
+		if (getIPCurrentCardWifi().length <= 2) {
+			if (flag3_firstTime) {
+				if (check_interval_count > 0) {
+					console.log("Reconnect #" + check_interval_count);
+					check_interval_count--;
+					loadAccessPoint();
+				}
+				flag3_firstTime = false;
+			}
+		}
+	} else {
+		flag3_firstTime = true;
+		check_interval_count = MAX_RECONNECT;
+		console.log("Card doesn't exists");
+		console.log("program down");
+		process.exit()
+	}
+
+}, TIME_INTERVAL_4);
+
+
 
 setInterval(function() {
 	exec("netstat -ntu", []);

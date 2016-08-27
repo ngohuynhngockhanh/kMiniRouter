@@ -8,10 +8,7 @@ echo "Now path is: $path"
 
 echo "Create a auto start bash shell"
 echo "#!/bin/bash" > $auto_script_location
-echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> $auto_script_location
-echo "iptables -t nat -I POSTROUTING -o ra0 -j MASQUERADE" >> $auto_script_location
-echo "iptables -t nat -I POSTROUTING -o wlan0 -j MASQUERADE" >> $auto_script_location
-echo "cd $path && node ./index.js > /dev/null 2>&1 &" >> $auto_script_location
+echo "cd $path/bin && ./checkForAlive.sh > /dev/null 2>&1 &" >> $auto_script_location
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 echo "exit 0" >> $auto_script_location
 chmod 0755 $auto_script_location

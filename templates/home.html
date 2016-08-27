@@ -3,8 +3,9 @@
         <h2 class="text-center"><span translate="Wifi list">Wifi list</span> <button ng-click="survey()" class="btn btn-default" type="button" translate="Survey">Survey</button></h2>
 		<h4 class="text-center" id="accesspoint-status">
 			<span translate="IP Address">IP Address: </span>
-			{{info.currentIP}} {{accesspoint.status}}
+			<div>{{info.currentIP}} {{accesspoint.status}}</div>
 		</h4>
+		<h5 class="text-center"><div>{{info.currentAccessPointInfo.ssid}} / {{showPassword(info.currentAccessPointInfo.password)}}</div></h5>
 		<form class="text-center">
 			<div class="form-group">
 				<label><span translate="Wlan card">Wlan card</span></label>

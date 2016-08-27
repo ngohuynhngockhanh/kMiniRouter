@@ -572,7 +572,7 @@ function date (format, timestamp) {
       date.setDate(date.getDate() + diff)
     }
   }
-
+	
   function process (val) {
     // @todo: Reconcile this with regex using \s, taking into account
     // browser issues with split and regexes
@@ -621,6 +621,126 @@ function date (format, timestamp) {
   }
 
   return (date.getTime() / 1000)
+}function substr (str, start, len) {
+  //  discuss at: http://locutus.io/php/substr/
+  // original by: Martijn Wieringa
+  // bugfixed by: T.Wild
+  // improved by: Onno Marsman (https://twitter.com/onnomarsman)
+  // improved by: Brett Zamir (http://brett-zamir.me)
+  //  revised by: Theriault (https://github.com/Theriault)
+  //      note 1: Handles rare Unicode characters if 'unicode.semantics' ini (PHP6) is set to 'on'
+  //   example 1: substr('abcdef', 0, -1)
+  //   returns 1: 'abcde'
+  //   example 2: substr(2, 0, -6)
+  //   returns 2: false
+  //   example 3: ini_set('unicode.semantics', 'on')
+  //   example 3: substr('a\uD801\uDC00', 0, -1)
+  //   returns 3: 'a'
+  //   example 4: ini_set('unicode.semantics', 'on')
+  //   example 4: substr('a\uD801\uDC00', 0, 2)
+  //   returns 4: 'a\uD801\uDC00'
+  //   example 5: ini_set('unicode.semantics', 'on')
+  //   example 5: substr('a\uD801\uDC00', -1, 1)
+  //   returns 5: '\uD801\uDC00'
+  //   example 6: ini_set('unicode.semantics', 'on')
+  //   example 6: substr('a\uD801\uDC00z\uD801\uDC00', -3, 2)
+  //   returns 6: '\uD801\uDC00z'
+  //   example 7: ini_set('unicode.semantics', 'on')
+  //   example 7: substr('a\uD801\uDC00z\uD801\uDC00', -3, -1)
+  //   returns 7: '\uD801\uDC00z'
+  //        test: skip-3 skip-4 skip-5 skip-6 skip-7
+
+  str += ''
+  var end = str.length
+
+  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('unicode.emantics') : undefined) || 'off'
+
+  if (iniVal === 'off') {
+    // assumes there are no non-BMP characters;
+    // if there may be such characters, then it is best to turn it on (critical in true XHTML/XML)
+    if (start < 0) {
+      start += end
+    }
+    if (typeof len !== 'undefined') {
+      if (len < 0) {
+        end = len + end
+      } else {
+        end = len + start
+      }
+    }
+
+    // PHP returns false if start does not fall within the string.
+    // PHP returns false if the calculated end comes before the calculated start.
+    // PHP returns an empty string if start and end are the same.
+    // Otherwise, PHP returns the portion of the string from start to end.
+    if (start >= str.length || start < 0 || start > end) {
+      return false
+    }
+
+    return str.slice(start, end)
+  }
+
+  // Full-blown Unicode including non-Basic-Multilingual-Plane characters
+  var i = 0
+  var allBMP = true
+  var es = 0
+  var el = 0
+  var se = 0
+  var ret = ''
+
+  for (i = 0; i < str.length; i++) {
+    if (/[\uD800-\uDBFF]/.test(str.charAt(i)) && /[\uDC00-\uDFFF]/.test(str.charAt(i + 1))) {
+      allBMP = false
+      break
+    }
+  }
+
+  if (!allBMP) {
+    if (start < 0) {
+      for (i = end - 1, es = (start += end); i >= es; i--) {
+        if (/[\uDC00-\uDFFF]/.test(str.charAt(i)) && /[\uD800-\uDBFF]/.test(str.charAt(i - 1))) {
+          start--
+          es--
+        }
+      }
+    } else {
+      var surrogatePairs = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g
+      while ((surrogatePairs.exec(str)) !== null) {
+        var li = surrogatePairs.lastIndex
+        if (li - 2 < start) {
+          start++
+        } else {
+          break
+        }
+      }
+    }
+
+    if (start >= end || start < 0) {
+      return false
+    }
+    if (len < 0) {
+      for (i = end - 1, el = (end += len); i >= el; i--) {
+        if (/[\uDC00-\uDFFF]/.test(str.charAt(i)) && /[\uD800-\uDBFF]/.test(str.charAt(i - 1))) {
+          end--
+          el--
+        }
+      }
+      if (start > end) {
+        return false
+      }
+      return str.slice(start, end)
+    } else {
+      se = start + len
+      for (i = start; i < se; i++) {
+        ret += str.charAt(i)
+        if (/[\uD800-\uDBFF]/.test(str.charAt(i)) && /[\uDC00-\uDFFF]/.test(str.charAt(i + 1))) {
+          // Go one further, since one of the "characters" is part of a surrogate pair
+          se++
+        }
+      }
+      return ret
+    }
+  }
 }function strtr(str,from,to){var fr='',i=0,j=0,lenStr=0,lenFrom=0,tmpStrictForIn=false,fromTypeStr='',toTypeStr='',istr='';var tmpFrom=[];var tmpTo=[];var ret='';var match=false;if(typeof from==='object'){tmpStrictForIn=this.ini_set('phpjs.strictForIn',false);from=this.krsort(from);this.ini_set('phpjs.strictForIn',tmpStrictForIn);for(fr in from){if(from.hasOwnProperty(fr)){tmpFrom.push(fr);tmpTo.push(from[fr]);}}from=tmpFrom;to=tmpTo;}lenStr=str.length;lenFrom=from.length;fromTypeStr=typeof from==='string';toTypeStr=typeof to==='string';for(i=0;i<lenStr;i++){match=false;if(fromTypeStr){istr=str.charAt(i);for(j=0;j<lenFrom;j++){if(istr==from.charAt(j)){match=true;break;}}}else{for(j=0;j<lenFrom;j++){if(str.substr(i,from[j].length)==from[j]){match=true;i=(i+from[j].length)-1;break;}}}if(match){ret+=toTypeStr?to.charAt(j):to[j];}else{ret+=str.charAt(i);}}return ret;}function str_replace(search,replace,subject,count){var i=0,j=0,temp='',repl='',sl=0,fl=0,f=[].concat(search),r=[].concat(replace),s=subject,ra=Object.prototype.toString.call(r)==='[object Array]',sa=Object.prototype.toString.call(s)==='[object Array]';s=[].concat(s);if(count){this.window[count]=0;}for(i=0,sl=s.length;i<sl;i++){if(s[i]===''){continue;}for(j=0,fl=f.length;j<fl;j++){temp=s[i]+'';repl=ra?(r[j]!==undefined?r[j]:''):r[0];s[i]=(temp).split(f[j]).join(repl);if(count&&s[i]!==temp){this.window[count]+=(temp.length-s[i].length)/f[j].length;}}}return sa?s:s[0];}function strstr(haystack,needle,bool){var pos=0;haystack+='';pos=haystack.indexOf(needle);if(pos==-1){return false;}else{if(bool){return haystack.substr(0,pos);}else{return haystack.slice(pos);}}}function parse_url(str,component){var query,key=['source','scheme','authority','userInfo','user','pass','host','port','relative','path','directory','file','query','fragment'],ini=(this.php_js&&this.php_js.ini)||{},mode=(ini['phpjs.parse_url.mode']&&ini['phpjs.parse_url.mode'].local_value)||'php',parser={php:/^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,strict:/^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,loose:/^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/};var m=parser[mode].exec(str),uri={},i=14;while(i--){if(m[i]){uri[key[i]]=m[i];}}if(component){return uri[component.replace('PHP_URL_','').toLowerCase()];}if(mode!=='php'){var name=(ini['phpjs.parse_url.queryKey']&&ini['phpjs.parse_url.queryKey'].local_value)||'queryKey';parser=/(?:^|&)([^&=]*)=?([^&]*)/g;uri[name]={};query=uri[key[12]]||'';query.replace(parser,function($0,$1,$2){if($1){uri[name][$1]=$2;}});}delete uri.source;return uri;}function base64_decode(data){var b64='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';var o1,o2,o3,h1,h2,h3,h4,bits,i=0,ac=0,dec='',tmp_arr=[];if(!data){return data;}data+='';do{h1=b64.indexOf(data.charAt(i++));h2=b64.indexOf(data.charAt(i++));h3=b64.indexOf(data.charAt(i++));h4=b64.indexOf(data.charAt(i++));bits=h1<<18|h2<<12|h3<<6|h4;o1=bits>>16&0xff;o2=bits>>8&0xff;o3=bits&0xff;if(h3==64){tmp_arr[ac++]=String.fromCharCode(o1);}else if(h4==64){tmp_arr[ac++]=String.fromCharCode(o1,o2);}else{tmp_arr[ac++]=String.fromCharCode(o1,o2,o3);}}while(i<data.length);dec=tmp_arr.join('');return dec.replace(/\0+$/,'');}
 function trim (str, charlist) {
   //  discuss at: http://locutus.io/php/trim/
