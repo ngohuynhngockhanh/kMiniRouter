@@ -17,5 +17,5 @@ do
 		echo "Start kMiniRouter again"
 		cd $DIR && cd ../ && node ./index.js
 	fi
-	sleep 5
+	sleep 10
 done
