@@ -28,15 +28,29 @@
 			
 		
     }).config(function ($translateProvider) {
-		$translateProvider.translations('en', {
-			TITLE: 'Hello',
-			FOO: 'This is a paragraph.',
-			BUTTON_LANG_EN: 'english',
-			BUTTON_LANG_DE: 'german'
-		});
 		$translateProvider.translations('vi', {
-			Dashboard: 'Bảng cài đặt',
-			Survey:		'Tìm mạng'
+			Dashboard:			'Bảng cài đặt',
+			Survey:				'Tìm mạng',
+			Fullname:			'Họ và tên',
+			'Contact Page':		'Thông tin liên hệ',
+			'About Page':		'Về dự án',
+			'about_description':'Đây là project công cộng được tác giả sử dụng nhằm giúp các hệ thống máy tính nhúng dễ dàng kết nối vào wifi bằng cách sử dụng chip ralink.',
+			'Wlan card':		'Chọn card wifi',
+			'IP Address':		'Địa chỉ IP',
+			'Wifi list':		'Danh sách mạng wifi',
+			'About':			'Về dự án',
+			'Contact':			'Liên hệ',
+			'Survey':			'Lấy danh sách mạng wifi',
+			'Channel':			'Kênh',
+			'Signal percent':	'Tín hiệu mạng(%)',
+			Action:				'Hành động',
+			'Connect':			'Kết nối',
+			'Try to connect':	'Thử kến nối đến mạng này',
+			'SSID':				'Tên mạng wifi',
+			'Password':			'Mật khẩu',
+			'Security':			'Loại bảo mật wifi',
+			'Submit':			'Xác nhận'
+			
 		});
 		$translateProvider.preferredLanguage('vi');
 	}).
@@ -134,11 +148,11 @@
     });
 
     kMiniRouter.controller('aboutController', function($scope) {
-        $scope.message = 'Look! I am an about page.';
+        //$scope.message = 'Look! I am an about page.';
     });
 
     kMiniRouter.controller('contactController', function($scope) {
-        $scope.message = 'Contact us! JK. This is just a demo.';
+        //$scope.message = 'Contact us! JK. This is just a demo.';
     });
 	
 	
