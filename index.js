@@ -19,11 +19,11 @@ const SAVED_FILE = __dirname + '/savedInfo';
 const TIME_INTERVAL_1 = 3000; //refresh wlan config!
 const TIME_INTERVAL_2 = 3000; //refresh IP
 const TIME_INTERVAL_3 = 60000; //netstat -ntu
-const TIME_INTERVAL_4 = 70000; // check card wifi alive
+const TIME_INTERVAL_4 = 90000; // check card wifi alive
 const MAX_RECONNECT = 1;
 
 //timer timeout
-const TIME_TIMEOUT_1 = 30000;//timeout connect to AP
+const TIME_TIMEOUT_1 = 60000;//timeout connect to AP
 /*
 * Libraries
 */
