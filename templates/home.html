@@ -1,9 +1,9 @@
 <!-- home.html -->
     <div class="jumbotron">
         <h2 class="text-center"><span translate="Wifi list">Wifi list</span> <button ng-click="survey()" class="btn btn-default" type="button" translate="Survey">Survey</button></h2>
-		<h4 class="text-center">
+		<h4 class="text-center" id="accesspoint-status">
 			<span translate="IP Adress">IP Adress: </span>
-			{{info.currentIP}}
+			{{info.currentIP}} {{accesspoint.status}}
 		</h4>
 		<form class="text-center">
 			<div class="form-group">
@@ -39,7 +39,7 @@
 		<div class="row">
 		  <div class="col-md-12">
 			<h3 class="text-center"><span translate="Try to connect">Try to connect</span></h3>
-			<form class="form-horizontal" ng-submit="try_to_connect_with_full_info(accesspoint);">
+			<form id="form-accesspoint" class="form-horizontal" ng-submit="try_to_connect_with_full_info(accesspoint);">
 			  <div class="form-group">
 				<label for="inputSSID" translate="SSID">SSID</label>
 				<input type="text" class="form-control" ng-model="accesspoint.ssid">

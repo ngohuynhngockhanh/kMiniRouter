@@ -23,7 +23,7 @@ const TIME_INTERVAL_4 = 70000; // check card wifi alive
 const MAX_RECONNECT = 1;
 
 //timer timeout
-const TIME_TIMEOUT_1 = 60000;//connect to AP
+const TIME_TIMEOUT_1 = 30000;//timeout connect to AP
 /*
 * Libraries
 */
@@ -196,22 +196,22 @@ var tryToConnect = function (accesspoint, socket) {
 	console.log(accesspoint);
 	console.log("Setuped! Try to real connect!")
 	console.log(sh('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi).stdout);
-	var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo 123', []);
+	var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo "Finish dhclient0"', []);
 	var timeoutConnect = setTimeout(function() {
 		if (socket)
 			socket.emit("cant_connect");
-		
+		console.log("Can't connect, timeout!");
 	}, TIME_TIMEOUT_1);
 	tryHard.stdout.on('data', function (data) {
 		console.log("try hard");
 		var ip = getIPCurrentCardWifi();
 		console.log(ip);
 		if (ip && ip.length > 2) {
-			if (socket) 
+			if (socket)
 				socket.emit("connected");
 			saveAccesPoint(accesspoint);
+			console.log("connected");
 			clearTimeout(timeoutConnect);
-			
 		} 
 		console.log(data);
 	});

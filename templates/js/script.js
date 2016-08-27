@@ -2,7 +2,7 @@
 
     // create the module and name it kMiniRouter
         // also include ngRoute for all our routing needs
-    var kMiniRouter = angular.module('kMiniRouter', ['ngRoute','btford.socket-io','pascalprecht.translate']);
+    var kMiniRouter = angular.module('kMiniRouter', ['ngRoute','btford.socket-io','pascalprecht.translate', 'angular-loading-bar', 'duScroll']);
 
     // configure our routes
     kMiniRouter.config(function($routeProvider) {
@@ -56,7 +56,7 @@
 	});
 
     // create the controller and inject Angular's $scope
-    kMiniRouter.controller('mainController', function($scope, mySocket, $rootScope, $translate) {
+    kMiniRouter.controller('mainController', function($scope, mySocket, $rootScope, $translate, cfpLoadingBar, $document) {
         // create a message to display in our view
         $scope.message = 'Everyone come and see how good I look!';
 		
@@ -70,14 +70,18 @@
 		mySocket.on('survey_result', function (survey_result) {
 			$rootScope.info.wifiList = survey_result;
 			$rootScope.surveyTable = survey_result;
+			cfpLoadingBar.complete();
 		});
 		
 		mySocket.on('connected', function() {
-			alert("Connected to AP");
+			$scope.accesspoint.status = 'OK';
+			cfpLoadingBar.complete();
 		});
 		
 		mySocket.on('cant_connect', function() {
-			alert("We can't Connect to AP");
+			//alert("We can't Connect to AP");
+			$scope.accesspoint.status = 'ERROR';
+			cfpLoadingBar.complete();
 		});
 		
 		
@@ -85,6 +89,7 @@
 		$scope.survey = function() {
 			console.log("Survey");
 			mySocket.emit('survey');
+			cfpLoadingBar.start();
 		}
 		
 		$scope.updateCardWifi = function(cardName) {
@@ -111,11 +116,17 @@
 			}
 			$scope.accesspoint.ssid = ssidInfo.ssid;
 			$scope.accesspoint.security = ssidInfoSecurityToSelect(ssidInfo.security);
+			var someElement = angular.element(document.getElementById('form-accesspoint'));
+			$document.scrollToElement(someElement, 0, 1500);
 		}
 		
 		$scope.try_to_connect_with_full_info = function(accesspoint) {
-			console.log("Try to connect!")
+			console.log("Try to connect!");
+			cfpLoadingBar.set(0);
+			cfpLoadingBar.start();
 			mySocket.emit("tryToConnect", accesspoint);
+			var someElement = angular.element(document.getElementById('accesspoint-status'));
+			$document.scrollToElement(someElement, 60, 1500);
 			setTimeout(function() {
 				alert("Can't connect! Sorry, please check your ssid and password");
 			}, info.connectionTimeout + 1000);
