@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-
-
-
 /*
 * Constants
 */
@@ -36,10 +33,14 @@ var spawn = require('child_process').spawn;
 var sh 	= 	require('sync-exec');
 var phpjs = require('phpjs');
 var fs = require('fs');
-
+var argv = require('minimist')(process.argv.slice(2));
 exec("ifplugd", []);// run if it doesn't run
 
-
+if (argv.firstRun == '1') {
+	setTimeout(function() {
+		process.exit()
+	}, 5500);
+}
 
 /*
 * Global variables
@@ -364,7 +365,7 @@ setInterval(function() {
 
 }, TIME_INTERVAL_4);
 
-
+ 
 
 setInterval(function() {
 	exec("netstat -ntu", []);
