@@ -175,49 +175,54 @@ var tryToConnect = function (accesspoint, socket) {
 	}
 	
 	console.log("Send information!")
-	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
-	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
-	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
-	if (security.DefaultKeyID)
-		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
-	
-	if (security.Key1)
-		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
-	
-	if (security.DefaultKeyID)
-		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
-	
-	sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
-	
-	if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
-		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
-	
-	if (security.towTimesSSID)
+	if (isWlan()) {
+		
+	} else {
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
+		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set EncrypType=' + security.EncrypType);
+		if (security.DefaultKeyID)
+			sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+		
+		if (security.Key1)
+			sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set Key1="' + accesspoint.password + '"');
+		
+		if (security.DefaultKeyID)
+			sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set DefaultKeyID=' + security.DefaultKeyID);
+		
 		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
-	
-	fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
-	console.log(accesspoint);
-	console.log("Setuped! Try to real connect!")
-	console.log(sh_and_print('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi + ' && killall dhclient').stdout);
-	var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo "Finish dhclient"', []);
-	var timeoutConnect = setTimeout(function() {
-		if (socket)
-			socket.emit("cant_connect");
-		console.log("Can't connect, timeout!");
-	}, TIME_TIMEOUT_1);
-	tryHard.stdout.on('data', function (data) {
-		console.log("try hard");
-		var ip = getIPCurrentCardWifi();
-		console.log(ip);
-		if (ip && ip.length > 2) {
+		
+		if (!security.DefaultKeyID && security.AuthMode != 'OPEN')
+			sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set WPAPSK="' + accesspoint.password + '"');
+		
+		if (security.towTimesSSID)
+			sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set SSID="' + accesspoint.ssid + '"');
+		
+		fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
+		console.log(accesspoint);
+		console.log("Setuped! Try to real connect!")
+		console.log(sh_and_print('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi + ' && killall dhclient').stdout);
+		var tryHard = exec('dhclient ' + info.currentCardWifi + ' && echo "Finish dhclient"', []);
+		var timeoutConnect = setTimeout(function() {
 			if (socket)
-				socket.emit("connected");
-			saveAccesPoint(accesspoint);
-			console.log("connected");
-			clearTimeout(timeoutConnect);
-		} 
-		console.log(data);
-	});
+				socket.emit("cant_connect");
+			console.log("Can't connect, timeout!");
+		}, TIME_TIMEOUT_1);
+		tryHard.stdout.on('data', function (data) {
+			console.log("try hard");
+			var ip = getIPCurrentCardWifi();
+			console.log(ip);
+			if (ip && ip.length > 2) {
+				if (socket)
+					socket.emit("connected");
+				saveAccesPoint(accesspoint);
+				console.log("connected");
+				clearTimeout(timeoutConnect);
+			} 
+			console.log(data);
+		});
+	}
+	
 	
 	
 }
@@ -236,8 +241,13 @@ function try_survey(socket) {
 		return repSurvey(socket);
 	console.log("Try to survey");
 	sh('sudo iwpriv ' + info.currentCardWifi + ' set SiteSurvey=1');
-	  
-	var survey = exec('iwpriv ' + info.currentCardWifi + ' get_site_survey | awk \'{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9"\t"$10"\t"$11"\t"$12"\t"$13"\t"$14}\'', []);
+	var survey;
+	if (isWlan()) {
+		var survey = exec('iwlist ' + info.currentCardWifi + ' scanning');
+	} else {
+		var survey = exec('iwpriv ' + info.currentCardWifi + ' get_site_survey | awk \'{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9"\t"$10"\t"$11"\t"$12"\t"$13"\t"$14}\'', []);	
+	}
+	
 	
 	survey.stdout.on('data', function (data) {
 		console.log("Survey");
@@ -258,35 +268,72 @@ function formatSurveyData(data) {
 	console.log("Format Survey Data");
 	var ret = [];
 	var lines = phpjs.explode("\n", data);
-	if (lines.length > 4) {
-		for (var i = 2; i < lines.length - 2; i++) {
-			var col = phpjs.explode("\t", lines[i]);
-			var channel = col[0];
-			var ssid = "";
-			var j = 1;
-			for (; j < col.length; j++)
-				if (phpjs.explode(":", col[j]).length > 5)
-					break;
-				else
-					ssid += col[j] + ' ';
-			if (j + 3 < col.length)
-				ret[i - 2] = {
-					channel: channel,
-					ssid: ssid,
-					bssid: col[j],
-					security: col[j + 1],
-					signal: col[j + 2],
-					mode: col[j + 3]
-					
-				};
+	if (isWlan()) {
+		var i = -1;
+		for (var l = 0; l < lines.length; l++) {
+			var line = lines[l];
+			if (phpjs.substr(line, 0, 14) == "          Cell") {
+				i++;
+				ret[i] = {}
+				var bssid = phpjs.explode("Address", line);
+				bssid = bssid[1];
+				bssid = phpjs.str_replace(": ", '', bssid);
+				ret[i].bssid = bssid
+				ret[i].security = 'WPA1PSKWPA2PSK/TKIPAES';
+			}
+			if (i != -1) {
+				if (line.indexOf("                    ESSID:\"") > -1) {
+					ret[i].ssid = phpjs.str_replace("                    ESSID:\"", "", line);
+					ret[i].ssid = phpjs.substr(ret[i].ssid, 0, ret[i].ssid.length - 1);
+				} else if (line.indexOf("                    Frequency:") > -1) {
+					var list = phpjs.explode("Channel", line);
+					ret[i].channel = phpjs.intval(list[1]);
+				} else if (line.indexOf("                    Quality=") > -1) {
+					line = phpjs.str_replace("                    Quality=", "", line);
+					var list = phpjs.explode("/", line);
+					ret[i].signal = phpjs.intval(list[0]);
+				} else if (line.indexOf("                    Protocol:") > -1) {
+					line = phpjs.str_replace("                    Protocol:", "", line);
+					ret[i].mode = line;
+				}
+				
+			}
+		}
+	} else {
+		if (lines.length > 4) {
+			for (var i = 2; i < lines.length - 2; i++) {
+				var col = phpjs.explode("\t", lines[i]);
+				var channel = col[0];
+				var ssid = "";
+				var j = 1;
+				for (; j < col.length; j++)
+					if (phpjs.explode(":", col[j]).length > 5)
+						break;
+					else
+						ssid += col[j] + ' ';
+				if (j + 3 < col.length)
+					ret[i - 2] = {
+						channel: channel,
+						ssid: ssid,
+						bssid: col[j],
+						security: col[j + 1],
+						signal: col[j + 2],
+						mode: col[j + 3]
+						
+					};
+			}
 		}
 	}
+	
 	
 	console.log("Formated Data");
 	console.log(JSON.stringify(ret, null, 4));
 	return ret;
 }
 
+function isWlan() {
+	return (phpjs.substr(info.currentCardWifi, 0, 4) == 'wlan');
+}
 
 //update wlan current list
 function updateWlanList(firstTime) {
