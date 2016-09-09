@@ -176,7 +176,32 @@ var tryToConnect = function (accesspoint, socket) {
 	
 	console.log("Send information!")
 	if (isWlan()) {
-		
+		fs.writeFileSync('/etc/wpa_supplicant/wpa_supplicant.conf', "network={\n\tssid=\""+accesspoint.ssid+"\"\n\tpsk=\""+accesspoint.password+"\"\n}\n");
+		console.log(accesspoint);
+		console.log("Setuped! Try to real connect!")
+		console.log(sh_and_print('iwconfig ' + info.currentCardWifi + ' && ifdown ' + info.currentCardWifi + ' && killall ifup').stdout);
+		var tryHard = exec('ifup ' + info.currentCardWifi + ' && echo "Finish ifup"', []);
+		var timeoutConnect = setTimeout(function() {
+			if (socket)
+				socket.emit("cant_connect");
+			console.log("Can't connect, timeout!");
+		}, TIME_TIMEOUT_1);
+		tryHard.stderr.on('data', function(data) {
+			console.log(data)
+		});
+		tryHard.stdout.on('data', function (data) {
+			console.log("try hard");
+			var ip = getIPCurrentCardWifi();
+			console.log(ip);
+			if (ip && ip.length > 2) {
+				if (socket)
+					socket.emit("connected");
+				saveAccesPoint(accesspoint);
+				console.log("connected");
+				clearTimeout(timeoutConnect);
+			} 
+			console.log(data);
+		});
 	} else {
 		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set NetworkType=' + security.NetworkType);
 		sh_and_print('sudo iwpriv ' + info.currentCardWifi + ' set AuthMode=' + security.AuthMode);
@@ -337,9 +362,10 @@ function isWlan() {
 
 //update wlan current list
 function updateWlanList(firstTime) {
-	var __cardWifiList = phpjs.explode("\n", sh("iwconfig | grep ESSID | awk '{print $1}'").stdout);
+	var data = sh('sudo ifconfig -a | grep \'ra\\|wlan\' | grep "Link encap" | awk \'{print $1}\'').stdout;
+	var __cardWifiList = phpjs.explode("\n", data);
 	if (firstTime) {
-		var currentCardWifi = (__cardWifiList && __cardWifiList.length > 0) ? __cardWifiList[0] : 'wlan0';
+		var currentCardWifi = (__cardWifiList && __cardWifiList.length > 0 && __cardWifiList[0].length > 1) ? __cardWifiList[0] : 'ra0';
 		info.currentCardWifi = currentCardWifi;
 	}
 	info.cardWifiList = __cardWifiList;	
@@ -420,6 +446,9 @@ setInterval(function() {
 	var defaultGateWay = sh('route | grep default | grep 0.0.0.0').stdout;
 	console.log(defaultGateWay);
 	if (defaultGateWay.length < 10) {
-		exec("dhclient " + info.currentCardWifi, [])
+		if (isWlan()) 
+			exec("ifup " + info.currentCardWifi, [])
+		else 
+			exec("dhclient " + info.currentCardWifi, [])
 	}
 }, TIME_INTERVAL_3);
