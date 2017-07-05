@@ -1,4 +1,4 @@
-cmd_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o := gcc -Wp,-MD,/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/.rt_main_dev.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/4.9/include -I/usr/src/linux-headers-3.4.112-sun8i/arch/arm/include -Iarch/arm/include/generated -Iinclude  -include /usr/src/linux-headers-3.4.112-sun8i/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Iarch/arm/mach-sunxi/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -marm -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -funwind-tables -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -DAGGREGATION_SUPPORT -DPIGGYBACK_SUPPORT -DWMM_SUPPORT -DLINUX -Wall -Wstrict-prototypes -Wno-trigraphs -DSYSTEM_LOG_SUPPORT -DRT28xx_MODE=STA -DCHIPSET=7601U -DRESOURCE_PRE_ALLOC -I/home/ksp/kMiniRouter/driver/NETIF/include -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT -DDBG -DADHOC_WPA2PSK_SUPPORT -DWPA_SUPPLICANT_SUPPORT -DWSC_STA_SUPPORT -DWSC_V2_SUPPORT -DWSC_LED_SUPPORT -DIWSC_SUPPORT -DRALINK_ATE -DCONFIG_RT2880_ATE_CMD_NEW -I/home/ksp/kMiniRouter/driver/NETIF/ate/include -DRALINK_QA -DDOT11_N_SUPPORT -DSTATS_COUNT_SUPPORT -DIFUP_IN_PROBE -DOS_ABL_SUPPORT -DOS_ABL_FUNC_SUPPORT -DOS_ABL_OS_PCI_SUPPORT -DOS_ABL_OS_USB_SUPPORT -DOS_ABL_OS_AP_SUPPORT -DOS_ABL_OS_STA_SUPPORT -DEXPORT_SYMTAB -DLED_CONTROL_SUPPORT -DMT7601U -DMT7601 -DRLT_MAC -DRLT_RF -DRTMP_MAC_USB -DRTMP_USB_SUPPORT -DRTMP_TIMER_TASK_SUPPORT -DRX_DMA_SCATTER -DVCORECAL_SUPPORT -DRTMP_EFUSE_SUPPORT -DNEW_MBSSID_MODE -DRTMP_INTERNAL_TX_ALC -DCONFIG_ANDES_SUPPORT -DDPD_CALIBRATION_SUPPORT -DANT_DIVERSITY_SUPPORT -DCONFIG_RX_CSO_SUPPORT -DRTMP_FREQ_CALIBRATION_SUPPORT  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(rt_main_dev)"  -D"KBUILD_MODNAME=KBUILD_STR(mtnet7601Usta)" -c -o /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/.tmp_rt_main_dev.o /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.c
+cmd_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o := gcc -Wp,-MD,/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/.rt_main_dev.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/5/include -I/usr/src/linux-headers-3.4.113-sun8i/arch/arm/include -Iarch/arm/include/generated -Iinclude  -include /usr/src/linux-headers-3.4.113-sun8i/include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Iarch/arm/mach-sunxi/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -marm -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -funwind-tables -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -DCC_HAVE_ASM_GOTO -DAGGREGATION_SUPPORT -DPIGGYBACK_SUPPORT -DWMM_SUPPORT -DLINUX -Wall -Wstrict-prototypes -Wno-trigraphs -DSYSTEM_LOG_SUPPORT -DRT28xx_MODE=STA -DCHIPSET=7601U -DRESOURCE_PRE_ALLOC -I/home/ksp/kMiniRouter/driver/NETIF/include -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT -DDBG -DADHOC_WPA2PSK_SUPPORT -DWPA_SUPPLICANT_SUPPORT -DWSC_STA_SUPPORT -DWSC_V2_SUPPORT -DWSC_LED_SUPPORT -DIWSC_SUPPORT -DRALINK_ATE -DCONFIG_RT2880_ATE_CMD_NEW -I/home/ksp/kMiniRouter/driver/NETIF/ate/include -DRALINK_QA -DDOT11_N_SUPPORT -DSTATS_COUNT_SUPPORT -DIFUP_IN_PROBE -DOS_ABL_SUPPORT -DOS_ABL_FUNC_SUPPORT -DOS_ABL_OS_PCI_SUPPORT -DOS_ABL_OS_USB_SUPPORT -DOS_ABL_OS_AP_SUPPORT -DOS_ABL_OS_STA_SUPPORT -DEXPORT_SYMTAB -DLED_CONTROL_SUPPORT -DMT7601U -DMT7601 -DRLT_MAC -DRLT_RF -DRTMP_MAC_USB -DRTMP_USB_SUPPORT -DRTMP_TIMER_TASK_SUPPORT -DRX_DMA_SCATTER -DVCORECAL_SUPPORT -DRTMP_EFUSE_SUPPORT -DNEW_MBSSID_MODE -DRTMP_INTERNAL_TX_ALC -DCONFIG_ANDES_SUPPORT -DDPD_CALIBRATION_SUPPORT -DANT_DIVERSITY_SUPPORT -DCONFIG_RX_CSO_SUPPORT -DRTMP_FREQ_CALIBRATION_SUPPORT  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(rt_main_dev)"  -D"KBUILD_MODNAME=KBUILD_STR(mtnet7601Usta)" -c -o /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/.tmp_rt_main_dev.o /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.c
 
 source_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o := /home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.c
 
@@ -41,7 +41,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/arch/dma/addr/t/64bit.h) \
     $(wildcard include/config/phys/addr/t/64bit.h) \
     $(wildcard include/config/64bit.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/types.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/types.h \
   include/asm-generic/int-ll64.h \
   arch/arm/include/generated/asm/bitsperlong.h \
   include/asm-generic/bitsperlong.h \
@@ -56,14 +56,15 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/compiler-gcc.h \
     $(wildcard include/config/arch/supports/optimized/inlining.h) \
     $(wildcard include/config/optimize/inlining.h) \
-  include/linux/compiler-gcc4.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/posix_types.h \
+  include/linux/compiler-gcc5.h \
+    $(wildcard include/config/arch/use/builtin/bswap.h) \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/posix_types.h \
   include/asm-generic/posix_types.h \
   include/linux/poison.h \
     $(wildcard include/config/illegal/pointer/value.h) \
   include/linux/const.h \
   include/linux/stat.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/stat.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/stat.h \
   include/linux/time.h \
     $(wildcard include/config/arch/uses/gettimeoffset.h) \
   include/linux/cache.h \
@@ -76,22 +77,22 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/numa.h) \
     $(wildcard include/config/compaction.h) \
   include/linux/sysinfo.h \
-  /usr/lib/gcc/arm-linux-gnueabihf/4.9/include/stdarg.h \
+  /usr/lib/gcc/arm-linux-gnueabihf/5/include/stdarg.h \
   include/linux/linkage.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/linkage.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/linkage.h \
   include/linux/bitops.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/bitops.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/bitops.h \
   include/linux/irqflags.h \
     $(wildcard include/config/trace/irqflags.h) \
     $(wildcard include/config/irqsoff/tracer.h) \
     $(wildcard include/config/preempt/tracer.h) \
     $(wildcard include/config/trace/irqflags/support.h) \
   include/linux/typecheck.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/irqflags.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/ptrace.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/irqflags.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/ptrace.h \
     $(wildcard include/config/cpu/endian/be8.h) \
     $(wildcard include/config/arm/thumb.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/hwcap.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/hwcap.h \
   include/asm-generic/bitops/non-atomic.h \
   include/asm-generic/bitops/fls64.h \
   include/asm-generic/bitops/sched.h \
@@ -100,10 +101,10 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/asm-generic/bitops/const_hweight.h \
   include/asm-generic/bitops/lock.h \
   include/asm-generic/bitops/le.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/byteorder.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/byteorder.h \
   include/linux/byteorder/little_endian.h \
   include/linux/swab.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/swab.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/swab.h \
   include/linux/byteorder/generic.h \
   include/asm-generic/bitops/ext2-atomic-setbit.h \
   include/linux/log2.h \
@@ -115,16 +116,16 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/init.h \
     $(wildcard include/config/hotplug.h) \
   include/linux/dynamic_debug.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/div64.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/compiler.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/bug.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/div64.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/compiler.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/bug.h \
     $(wildcard include/config/bug.h) \
     $(wildcard include/config/thumb2/kernel.h) \
     $(wildcard include/config/debug/bugverbose.h) \
     $(wildcard include/config/arm/lpae.h) \
   include/asm-generic/bug.h \
     $(wildcard include/config/generic/bug/relative/pointers.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/cache.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/cache.h \
     $(wildcard include/config/arm/l1/cache/shift.h) \
     $(wildcard include/config/aeabi.h) \
   include/linux/seqlock.h \
@@ -139,12 +140,12 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/preempt/notifiers.h) \
   include/linux/thread_info.h \
     $(wildcard include/config/compat.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/thread_info.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/thread_info.h \
     $(wildcard include/config/arm/thumbee.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/fpstate.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/fpstate.h \
     $(wildcard include/config/vfpv3.h) \
     $(wildcard include/config/iwmmxt.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/page.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/page.h \
     $(wildcard include/config/mmu.h) \
     $(wildcard include/config/cpu/copy/v3.h) \
     $(wildcard include/config/cpu/copy/v4wt.h) \
@@ -156,9 +157,9 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/cpu/xsc3.h) \
     $(wildcard include/config/cpu/copy/v6.h) \
     $(wildcard include/config/have/arch/pfn/valid.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/glue.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/pgtable-2level-types.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/memory.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/glue.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/pgtable-2level-types.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/memory.h \
     $(wildcard include/config/need/mach/memory/h.h) \
     $(wildcard include/config/page/offset.h) \
     $(wildcard include/config/highmem.h) \
@@ -191,31 +192,31 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/sparsemem/vmemmap.h) \
     $(wildcard include/config/sparsemem.h) \
   include/asm-generic/getorder.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/domain.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/domain.h \
     $(wildcard include/config/io/36.h) \
     $(wildcard include/config/cpu/use/domains.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/barrier.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/barrier.h \
     $(wildcard include/config/cpu/32v6k.h) \
     $(wildcard include/config/cpu/fa526.h) \
     $(wildcard include/config/arch/has/barriers.h) \
     $(wildcard include/config/arm/dma/mem/bufferable.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/outercache.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/outercache.h \
     $(wildcard include/config/outer/cache/sync.h) \
     $(wildcard include/config/outer/cache.h) \
   include/linux/stringify.h \
   include/linux/bottom_half.h \
   include/linux/spinlock_types.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/spinlock_types.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/spinlock_types.h \
   include/linux/lockdep.h \
     $(wildcard include/config/lockdep.h) \
     $(wildcard include/config/lock/stat.h) \
     $(wildcard include/config/prove/rcu.h) \
   include/linux/rwlock_types.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/spinlock.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/processor.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/spinlock.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/processor.h \
     $(wildcard include/config/have/hw/breakpoint.h) \
     $(wildcard include/config/arm/errata/754327.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/hw_breakpoint.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/hw_breakpoint.h \
   include/linux/rwlock.h \
   include/linux/spinlock_api_smp.h \
     $(wildcard include/config/inline/spin/lock.h) \
@@ -250,8 +251,8 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/atomic.h \
     $(wildcard include/config/arch/has/atomic/or.h) \
     $(wildcard include/config/generic/atomic64.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/atomic.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/cmpxchg.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/atomic.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/cmpxchg.h \
     $(wildcard include/config/cpu/sa110.h) \
     $(wildcard include/config/cpu/v6.h) \
   include/asm-generic/cmpxchg-local.h \
@@ -282,7 +283,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/holes/in/zone.h) \
     $(wildcard include/config/arch/has/holes/memorymodel.h) \
   include/linux/wait.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/current.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/current.h \
   include/linux/threads.h \
     $(wildcard include/config/nr/cpus.h) \
     $(wildcard include/config/base/small.h) \
@@ -292,7 +293,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/bitmap.h \
   include/linux/string.h \
     $(wildcard include/config/binary/printf.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/string.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/string.h \
   include/linux/pageblock-flags.h \
     $(wildcard include/config/hugetlb/page.h) \
     $(wildcard include/config/hugetlb/page/size/variable.h) \
@@ -340,7 +341,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/use/percpu/numa/node/id.h) \
   include/linux/smp.h \
     $(wildcard include/config/use/generic/smp/helpers.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/smp.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/smp.h \
   include/linux/percpu.h \
     $(wildcard include/config/need/per/cpu/embed/first/chunk.h) \
     $(wildcard include/config/need/per/cpu/page/first/chunk.h) \
@@ -350,7 +351,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/asm-generic/percpu.h \
   include/linux/percpu-defs.h \
     $(wildcard include/config/debug/force/weak/per/cpu.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/topology.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/topology.h \
     $(wildcard include/config/arm/cpu/topology.h) \
     $(wildcard include/config/disable/cpu/sched/domain/balance.h) \
   include/asm-generic/topology.h \
@@ -368,17 +369,17 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/jiffies.h \
   include/linux/timex.h \
   include/linux/param.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/param.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/param.h \
     $(wildcard include/config/hz.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/timex.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/timex.h \
   arch/arm/mach-sunxi/include/mach/timex.h \
   include/linux/sysctl.h \
     $(wildcard include/config/sysctl.h) \
   include/linux/rbtree.h \
   include/linux/elf.h \
   include/linux/elf-em.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/elf.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/user.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/elf.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/user.h \
   include/linux/kobject.h \
   include/linux/sysfs.h \
   include/linux/kobject_ns.h \
@@ -391,16 +392,16 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/static_key.h \
   include/linux/jump_label.h \
     $(wildcard include/config/jump/label.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/jump_label.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/system.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/exec.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/switch_to.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/system_info.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/system_misc.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/jump_label.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/system.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/exec.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/switch_to.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/system_info.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/system_misc.h \
   include/linux/export.h \
     $(wildcard include/config/symbol/prefix.h) \
     $(wildcard include/config/modversions.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/module.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/module.h \
     $(wildcard include/config/arm/unwind.h) \
   include/linux/version.h \
   include/linux/slab.h \
@@ -424,8 +425,8 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/irq/time/accounting.h) \
   include/linux/ftrace_irq.h \
     $(wildcard include/config/ftrace/nmi/enter.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/hardirq.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/irq.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/hardirq.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/irq.h \
     $(wildcard include/config/sparse/irq.h) \
   arch/arm/mach-sunxi/include/mach/irqs.h \
   arch/arm/mach-sunxi/include/mach/sun8i/irqs-sun8iw7p1.h \
@@ -464,7 +465,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/pm/runtime.h) \
     $(wildcard include/config/pm/clk.h) \
     $(wildcard include/config/pm/generic/domains.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/device.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/device.h \
     $(wildcard include/config/dmabounce.h) \
     $(wildcard include/config/iommu/api.h) \
     $(wildcard include/config/arm/dma/use/iommu.h) \
@@ -472,7 +473,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/pm_wakeup.h \
   include/linux/io.h \
     $(wildcard include/config/has/ioport.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/io.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/io.h \
     $(wildcard include/config/need/mach/io/h.h) \
     $(wildcard include/config/pcmcia/soc/common.h) \
     $(wildcard include/config/isa.h) \
@@ -482,7 +483,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/generic/pci/iomap.h) \
   arch/arm/mach-sunxi/include/mach/io.h \
   include/linux/pci_ids.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/pci.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/pci.h \
   include/asm-generic/pci-dma-compat.h \
   include/linux/dma-mapping.h \
     $(wildcard include/config/has/dma.h) \
@@ -519,15 +520,15 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/page/poisoning.h) \
     $(wildcard include/config/page/guard.h) \
     $(wildcard include/config/page/debug/something/else.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/mmu.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/mmu.h \
     $(wildcard include/config/cpu/has/asid.h) \
   include/linux/range.h \
   include/linux/bit_spinlock.h \
   include/linux/shrinker.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/pgtable.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/pgtable.h \
     $(wildcard include/config/highpte.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/proc-fns.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/glue-proc.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/proc-fns.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/glue-proc.h \
     $(wildcard include/config/cpu/arm610.h) \
     $(wildcard include/config/cpu/arm7tdmi.h) \
     $(wildcard include/config/cpu/arm710.h) \
@@ -549,9 +550,9 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/cpu/v6k.h) \
     $(wildcard include/config/cpu/v7.h) \
   include/asm-generic/pgtable-nopud.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/pgtable-hwdef.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/pgtable-2level-hwdef.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/pgtable-2level.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/pgtable-hwdef.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/pgtable-2level-hwdef.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/pgtable-2level.h \
   include/asm-generic/pgtable.h \
   include/linux/page-flags.h \
     $(wildcard include/config/pageflags/extended.h) \
@@ -563,11 +564,11 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/vmstat.h \
     $(wildcard include/config/vm/event/counters.h) \
   include/linux/vm_event_item.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/scatterlist.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/scatterlist.h \
     $(wildcard include/config/arm/has/sg/chain.h) \
   include/asm-generic/scatterlist.h \
     $(wildcard include/config/need/sg/dma/length.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/dma-mapping.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/dma-mapping.h \
   include/linux/dma-debug.h \
     $(wildcard include/config/dma/api/debug.h) \
   include/asm-generic/dma-coherent.h \
@@ -575,7 +576,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/asm-generic/dma-mapping-common.h \
   include/linux/kmemcheck.h \
   include/asm-generic/pci-bridge.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/mach/pci.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/mach/pci.h \
   include/linux/netdevice.h \
     $(wildcard include/config/dcb.h) \
     $(wildcard include/config/wlan.h) \
@@ -604,8 +605,8 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/netpoll/trap.h) \
   include/linux/if.h \
   include/linux/socket.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/socket.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/sockios.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/socket.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/sockios.h \
   include/linux/sockios.h \
   include/linux/uio.h \
   include/linux/hdlc/ioctl.h \
@@ -630,14 +631,14 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   arch/arm/include/generated/asm/ioctl.h \
   include/asm-generic/ioctl.h \
   include/linux/fcntl.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/fcntl.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/fcntl.h \
   include/asm-generic/fcntl.h \
   include/linux/textsearch.h \
   include/net/checksum.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/uaccess.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/unified.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/uaccess.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/unified.h \
     $(wildcard include/config/arm/asm/unified.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/checksum.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/checksum.h \
   include/linux/in6.h \
   include/linux/dmaengine.h \
     $(wildcard include/config/async/tx/enable/channel/switch.h) \
@@ -655,7 +656,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/linux/miscdevice.h \
   include/linux/major.h \
   include/linux/delay.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/delay.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/delay.h \
   include/linux/rculist.h \
   include/linux/dynamic_queue_limits.h \
   include/linux/ethtool.h \
@@ -780,13 +781,13 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/asm-generic/cputime.h \
   include/linux/sem.h \
   include/linux/ipc.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/ipcbuf.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/ipcbuf.h \
   include/asm-generic/ipcbuf.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/sembuf.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/sembuf.h \
   include/linux/signal.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/signal.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/signal.h \
   include/asm-generic/signal-defs.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/sigcontext.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/sigcontext.h \
   arch/arm/include/generated/asm/siginfo.h \
   include/asm-generic/siginfo.h \
   include/linux/proportions.h \
@@ -824,7 +825,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
     $(wildcard include/config/cgroup/perf.h) \
   include/linux/etherdevice.h \
     $(wildcard include/config/have/efficient/unaligned/access.h) \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/unaligned.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/unaligned.h \
   include/linux/unaligned/le_byteshift.h \
   include/linux/unaligned/be_byteshift.h \
   include/linux/unaligned/generic.h \
@@ -847,7 +848,7 @@ deps_/home/ksp/kMiniRouter/driver/NETIF/os/linux/../../os/linux/rt_main_dev.o :=
   include/net/iw_handler.h \
     $(wildcard include/config/wext/priv.h) \
   include/linux/unistd.h \
-  /usr/src/linux-headers-3.4.112-sun8i/arch/arm/include/asm/unistd.h \
+  /usr/src/linux-headers-3.4.113-sun8i/arch/arm/include/asm/unistd.h \
     $(wildcard include/config/oabi/compat.h) \
   include/linux/kthread.h \
   /home/ksp/kMiniRouter/driver/NETIF/include/os/rt_linux_cmm.h \
